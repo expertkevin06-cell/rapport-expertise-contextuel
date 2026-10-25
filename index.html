@@ -10,10 +10,15 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <link rel="stylesheet" href="./style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://js.puter.com/v2/"></script>
+  <style>
+    #quotaBadge{display:inline-block;margin-top:6px;padding:6px 12px;font-size:12.5px;font-weight:700;
+      color:#6b5510;background:rgba(255,255,255,.9);border:1px solid var(--gold);border-radius:999px}
+    #reportSource{font-size:12px;color:#4a5065;margin:0 0 8px;font-style:italic}
+  </style>
 </head>
 <body>
 
-  <!-- ===== Connexion Admin ===== -->
   <div id="loginScreen" class="screen">
     <div class="login-box panel">
       <div class="scales">⚖️</div>
@@ -25,20 +30,18 @@
     </div>
   </div>
 
-  <!-- ===== Écran principal ===== -->
   <div id="mainScreen" class="screen hidden">
-
     <header class="app-header panel">
       <div>
         <h2>⚖️ Analyse de Litige Automobile</h2>
         <p class="subtitle">Expertise ingénieur + analyse juridique (vices cachés, conformité, jurisprudence)</p>
+        <span id="quotaBadge">🧠 Analyses IA aujourd\u2019hui : 0</span>
       </div>
       <button class="btn-secondary" onclick="logout()">Déconnexion</button>
     </header>
 
     <form id="litigeForm" class="panel" autocomplete="off">
       <h3 class="section-title">1. Contexte du litige</h3>
-
       <label for="typeLitige">Type de litige</label>
       <select id="typeLitige" required>
         <option value="vente_particulier">Vente entre particuliers</option>
@@ -46,29 +49,24 @@
         <option value="vente_pro_pro">Vente entre professionnels</option>
         <option value="intervention">Litige suite à intervention d'un professionnel de l'automobile</option>
       </select>
-
       <label for="dateEvent">Date de la vente / de l'intervention</label>
       <input type="date" id="dateEvent" required>
-
       <label for="kmEvent">Kilométrage lors de l'événement</label>
       <input type="number" id="kmEvent" inputmode="numeric" placeholder="ex : 85000" required>
-
       <label for="datePanne">Date du constat de la panne</label>
       <input type="date" id="datePanne" required>
-
       <label for="kmPanne">Kilométrage actuel (panne)</label>
       <input type="number" id="kmPanne" inputmode="numeric" placeholder="ex : 92000" required>
-
       <label for="descPanne">Description détaillée des pannes et symptômes</label>
       <textarea id="descPanne" placeholder="Ex : bruit métallique, perte de puissance, voyant moteur, fuite…" required></textarea>
-
       <button type="button" onclick="generateReport()">🧠 Générer le rapport d'expertise (IA)</button>
     </form>
 
-    <div id="loading" class="hidden">⚖️ Analyse technique et recherche juridique en cours…<br><small>(IA gratuite — quelques secondes)</small></div>
+    <div id="loading" class="hidden">⚖️ Analyse technique et juridique en cours…<br><small>IA gratuite sans clé (Puter → Pollinations → moteur local)</small></div>
 
     <div id="reportContainer" class="hidden">
       <h3>📄 Rapport d'expertise</h3>
+      <p id="reportSource"></p>
       <div id="reportText"></div>
       <div class="btn-group">
         <button onclick="downloadPDF()">⬇️ PDF</button>
@@ -83,13 +81,5 @@
   </div>
 
   <script src="./app.js"></script>
-  <script>
-    /* Enregistrement du Service Worker (mode hors-ligne + cache du fond) */
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('./sw.js').catch(function (e) { console.warn('SW :', e); });
-      });
-    }
-  </script>
 </body>
 </html>
