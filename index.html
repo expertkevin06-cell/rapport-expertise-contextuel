@@ -1,83 +1,95 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Expert Auto Litige</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#d4af37">
+  <title>Expert Auto Litige</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('./sw.js').catch(function (e) { console.warn('SW:', e); });
-    });
-  }
-</script><body>
-    <!-- Écran de connexion Admin -->
-    <div id="loginScreen" class="screen">
-        <div class="login-box">
-            <h1>Expert Auto</h1>
-            <p>Accès réservé à l'administrateur</p>
-            <input type="password" id="passwordInput" placeholder="Mot de passe Admin">
-            <button onclick="login()">Connexion Sécurisée</button>
-        </div>
+<body>
+
+  <!-- ===== Connexion Admin ===== -->
+  <div id="loginScreen" class="screen">
+    <div class="login-box panel">
+      <div class="scales">⚖️</div>
+      <h1>Expert Auto</h1>
+      <p class="subtitle">Analyse technique & juridique des litiges automobiles</p>
+      <label for="passwordInput">Mot de passe administrateur</label>
+      <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password">
+      <button onclick="login()">🔐 Connexion sécurisée</button>
+    </div>
+  </div>
+
+  <!-- ===== Écran principal ===== -->
+  <div id="mainScreen" class="screen hidden">
+
+    <header class="app-header panel">
+      <div>
+        <h2>⚖️ Analyse de Litige Automobile</h2>
+        <p class="subtitle">Expertise ingénieur + analyse juridique (vices cachés, conformité, jurisprudence)</p>
+      </div>
+      <button class="btn-secondary" onclick="logout()">Déconnexion</button>
+    </header>
+
+    <form id="litigeForm" class="panel" autocomplete="off">
+      <h3 class="section-title">1. Contexte du litige</h3>
+
+      <label for="typeLitige">Type de litige</label>
+      <select id="typeLitige" required>
+        <option value="vente_particulier">Vente entre particuliers</option>
+        <option value="vente_pro_part">Vendeur professionnel → acheteur particulier</option>
+        <option value="vente_pro_pro">Vente entre professionnels</option>
+        <option value="intervention">Litige suite à intervention d'un professionnel de l'automobile</option>
+      </select>
+
+      <label for="dateEvent">Date de la vente / de l'intervention</label>
+      <input type="date" id="dateEvent" required>
+
+      <label for="kmEvent">Kilométrage lors de l'événement</label>
+      <input type="number" id="kmEvent" inputmode="numeric" placeholder="ex : 85000" required>
+
+      <label for="datePanne">Date du constat de la panne</label>
+      <input type="date" id="datePanne" required>
+
+      <label for="kmPanne">Kilométrage actuel (panne)</label>
+      <input type="number" id="kmPanne" inputmode="numeric" placeholder="ex : 92000" required>
+
+      <label for="descPanne">Description détaillée des pannes et symptômes</label>
+      <textarea id="descPanne" placeholder="Ex : bruit métallique, perte de puissance, voyant moteur, fuite…" required></textarea>
+
+      <button type="button" onclick="generateReport()">🧠 Générer le rapport d'expertise (IA)</button>
+    </form>
+
+    <div id="loading" class="hidden">⚖️ Analyse technique et recherche juridique en cours…<br><small>(IA gratuite — quelques secondes)</small></div>
+
+    <div id="reportContainer" class="hidden">
+      <h3>📄 Rapport d'expertise</h3>
+      <div id="reportText"></div>
+      <div class="btn-group">
+        <button onclick="downloadPDF()">⬇️ PDF</button>
+        <button onclick="saveLocal()">💾 Sauvegarde hors-ligne</button>
+      </div>
     </div>
 
-    <!-- Écran Principal -->
-    <div id="mainScreen" class="screen hidden">
-        <header>
-            <h2>Analyse de Litige Automobile</h2>
-            <button onclick="logout()" class="btn-secondary">Déconnexion</button>
-        </header>
-        
-        <form id="litigeForm">
-            <h3>1. Contexte du Litige</h3>
-            <label>Type de litige:</label>
-            <select id="typeLitige" required>
-                <option value="vente_particulier">Vente entre particuliers</option>
-                <option value="vente_pro_part">Vendeur Pro vers Particulier</option>
-                <option value="vente_pro_pro">Vente entre Professionnels</option>
-                <option value="intervention">Litige suite à intervention (Garage/Pro)</option>
-            </select>
+    <section class="panel">
+      <h3 class="section-title">🗂️ Dossiers sauvegardés (hors-ligne)</h3>
+      <div id="savedList"></div>
+    </section>
+  </div>
 
-            <label>Date de la vente / intervention:</label>
-            <input type="date" id="dateEvent" required>
-
-            <label>Kilométrage lors de l'événement:</label>
-            <input type="number" id="kmEvent" required placeholder="ex: 85000">
-
-            <label>Date du constat de la panne:</label>
-            <input type="date" id="datePanne" required>
-
-            <label>Kilométrage actuel (panne):</label>
-            <input type="number" id="kmPanne" required placeholder="ex: 92000">
-
-            <label>Description détaillée des pannes et symptômes:</label>
-            <textarea id="descPanne" rows="5" required placeholder="Ex: Bruit métallique, perte de puissance, voyant moteur..."></textarea>
-
-            <button type="button" onclick="generateReport()">Générer le Rapport d'Expertise (IA)</button>
-        </form>
-
-        <div id="loading" class="hidden">
-            <p>⚖️ Analyse technique et recherche juridique en cours...</p>
-        </div>
-
-        <div id="reportContainer" class="hidden">
-            <h3>Rapport d'Expertise</h3>
-            <div id="reportText"></div>
-            <div class="btn-group">
-                <button onclick="downloadPDF()">Télécharger en PDF</button>
-                <button onclick="saveLocal()">Sauvegarder Hors-Ligne</button>
-            </div>
-        </div>
-
-        <hr>
-        <h3>Dossiers Sauvegardés (Hors-Ligne)</h3>
-        <div id="savedList"></div>
-    </div>
-
-    <script src="app.js"></script>
+  <script src="./app.js"></script>
+  <script>
+    /* Enregistrement du Service Worker (mode hors-ligne + cache du fond) */
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function (e) { console.warn('SW :', e); });
+      });
+    }
+  </script>
 </body>
 </html>
