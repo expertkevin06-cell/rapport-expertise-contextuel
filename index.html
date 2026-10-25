@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>⚖️ Expert Litiges Auto – K06</title>
+<meta name="description" content="Rapports d'expertise pour litiges et pannes automobiles – analyse technique et juridique (vices cachés, conformité, délivrance, dol, obligation de résultat).">
+<meta name="theme-color" content="#0d1b2a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+:root{--gold:#d4af37;--gold2:#f5d97b;--bg:#05070f;--card:rgba(13,27,42,.78);--card2:rgba(27,38,59,.6);--txt:#e8e6df;--mut:#9aa5b1;--ok:#34d399;--warn:#fbbf24;--bad:#f87171;--acc:#7dd3fc}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden}
+#bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:-2}
+#bgOverlay{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 0%,transparent 0%,rgba(5,7,15,.55) 70%,rgba(5,7,15,.85) 100%)}
+.hidden{display:none!important}
+/* ---------- Écran verrou ---------- */
+#lock{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.lockCard{width:100%;max-width:420px;background:var(--card);backdrop-filter:blur(14px);border:1px solid rgba(212,175,55,.35);border-radius:18px;padding:34px 28px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.lockCard .logo{font-size:52px}
+.lockCard h1{font-size:1.45rem;color:var(--gold2);margin:8px 0 4px;letter-spacing:.5px}
+.lockCard p{color:var(--mut);font-size:.9rem;margin-bottom:20px}
+/* ---------- Formulaire & UI ---------- */
+input,select,textarea,button{font-family:inherit;font-size:1rem}
+input,select,textarea{width:100%;padding:11px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(5,10,20,.65);color:var(--txt);outline:none;transition:border .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.82rem;color:var(--mut);margin:12px 0 5px;font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;border:none;cursor:pointer;font-weight:700;background:linear-gradient(135deg,var(--gold),#a8842a);color:#1a1405;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,175,55,.35)}
+.btn.sec{background:var(--card2);color:var(--txt);border:1px solid rgba(255,255,255,.18)}
+.btn.dgr{background:#7f1d1d;color:#fff}
+.btn.sm{padding:8px 13px;font-size:.85rem;border-radius:9px}
+.btn:disabled{opacity:.5;cursor:wait}
+/* ---------- App layout ---------- */
+#app{max-width:1060px;margin:0 auto;padding:14px 14px 90px}
+header.top{display:flex;align-items:center;gap:12px;padding:10px 4px 14px;flex-wrap:wrap}
+header.top .brand{display:flex;align-items:center;gap:10px;flex:1;min-width:200px}
+header.top .brand img{width:44px;height:44px;border-radius:10px}
+header.top h1{font-size:1.15rem;color:var(--gold2)}
+header.top .sub{font-size:.72rem;color:var(--mut)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;padding:5px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.15);background:var(--card2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.dot.off{background:var(--bad);box-shadow:0 0 8px var(--bad)}
+nav.tabs{display:flex;gap:6px;overflow-x:auto;padding:6px 0 12px;-webkit-overflow-scrolling:touch}
+nav.tabs button{white-space:nowrap;padding:10px 15px;border-radius:99px;border:1px solid rgba(255,255,255,.12);background:var(--card2);color:var(--mut);cursor:pointer;font-weight:600;font-size:.85rem}
+nav.tabs button.on{background:linear-gradient(135deg,var(--gold),#a8842a);color:#1a1405;border-color:transparent}
+section.tab{display:none;animation:fade .25s}
+section.tab.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.card{background:var(--card);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.card h2{color:var(--gold2);font-size:1.05rem;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.card h3{color:var(--acc);font-size:.95rem;margin:14px 0 6px}
+.card .desc{color:var(--mut);font-size:.85rem;margin-bottom:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 14px}
+@media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px}
+.metric{background:rgba(5,10,20,.5);border:1px solid rgba(212,175,55,.2);border-radius:12px;padding:12px;text-align:center}
+.metric .v{font-size:1.25rem;font-weight:800;color:var(--gold2)}
+.metric .k{font-size:.7rem;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.alert{border-radius:12px;padding:12px 14px;margin:8px 0;font-size:.88rem;border-left:4px solid}
+.alert.ok{background:rgba(52,211,153,.08);border-color:var(--ok)}
+.alert.warn{background:rgba(251,191,36,.08);border-color:var(--warn)}
+.alert.bad{background:rgba(248,113,113,.08);border-color:var(--bad)}
+.alert.info{background:rgba(125,211,252,.08);border-color:var(--acc)}
+/* Rapport */
+#reportBox{background:rgba(250,248,242,.97);color:#1c2430;border-radius:14px;padding:26px;margin-top:14px;font-family:Georgia,'Times New Roman',serif;line-height:1.65;font-size:.95rem;overflow-wrap:break-word}
+#reportBox h1{font-size:1.4rem;color:#1a2740;border-bottom:3px solid var(--gold);padding-bottom:8px;margin:18px 0 12px}
+#reportBox h2{font-size:1.15rem;color:#26364f;margin:18px 0 8px;border-left:4px solid var(--gold);padding-left:10px}
+#reportBox h3{font-size:1rem;color:#3a4a63;margin:12px 0 6px}
+#reportBox h4{font-size:.95rem;color:#4a5a73;margin:10px 0 4px}
+#reportBox ul,#reportBox ol{margin:8px 0 8px 22px}
+#reportBox li{margin:4px 0}
+#reportBox blockquote{border-left:3px solid #b58d1e;background:#faf5e6;padding:8px 12px;margin:10px 0;font-style:italic;color:#5a4d20}
+#reportBox hr{border:none;border-top:1px dashed #b9b2a0;margin:16px 0}
+#reportBox code{background:#eef1f6;padding:1px 5px;border-radius:4px;font-size:.85em}
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(212,175,55,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Cas list */
+.caseCard{border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;margin:10px 0;background:var(--card2)}
+.caseCard .row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.caseCard .ref{color:var(--gold2);font-weight:700}
+.small{font-size:.78rem;color:var(--mut)}
+iframe.diag{width:100%;height:78vh;border:1px solid rgba(212,175,55,.3);border-radius:14px;background:#fff}
+footer{text-align:center;color:var(--mut);font-size:.75rem;padding:20px 10px;line-height:1.6}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:#111c2e;border:1px solid var(--gold);color:var(--gold2);padding:12px 20px;border-radius:12px;font-size:.88rem;opacity:0;transition:.35s;z-index:99;max-width:92vw;text-align:center}
+#toast.show{transform:translateX(-50%);opacity:1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.kbd{background:#111c2e;border:1px solid rgba(255,255,255,.2);padding:2px 7px;border-radius:5px;font-family:monospace;font-size:.85rem;color:var(--gold2)}
+@media print{#bg,#bgOverlay,nav.tabs,header.top,.btn,.actions{display:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ FOND D'ÉCRAN : sportive moderne + Déesse de la Justice ============ -->
+<svg id="bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#05070f"/><stop offset=".55" stop-color="#0d1b2a"/><stop offset="1" stop-color="#1b263b"/>
+  </linearGradient>
+  <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#f5d97b"/><stop offset=".5" stop-color="#d4af37"/><stop offset="1" stop-color="#8a6d1f"/>
+  </linearGradient>
+  <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#334155"/><stop offset=".45" stop-color="#141c2b"/><stop offset="1" stop-color="#05080f"/>
+  </linearGradient>
+  <linearGradient id="chromeG" x1="0" y1="0" x2="1" y2="1">
+   <stop offset="0" stop-color="#94a3b8"/><stop offset=".5" stop-color="#e2e8f0"/><stop offset="1" stop-color="#64748b"/>
+  </linearGradient>
+  <radialGradient id="halo" cx=".5" cy=".5" r=".5">
+   <stop offset="0" stop-color="rgba(212,175,55,.16)"/><stop offset="1" stop-color="rgba(212,175,55,0)"/>
+  </radialGradient>
+  <filter id="glowCyan" x="-80%" y="-80%" width="260%" height="260%">
+   <feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glowRed" x="-80%" y="-80%" width="260%" height="260%">
+   <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+ </defs>
+ <rect width="1440" height="900" fill="url(#sky)"/>
+ <!-- halo derrière la Justice -->
+ <ellipse cx="400" cy="330" rx="440" ry="420" fill="url(#halo)"/>
+ <!-- lignes de sol / horizon -->
+ <g stroke="rgba(125,211,252,.05)" stroke-width="1">
+  <line x1="0" y1="812" x2="1440" y2="812"/><line x1="0" y1="836" x2="1440" y2="836"/>
+  <line x1="0" y1="866" x2="1440" y2="866"/>
+ </g>
+ <g stroke="rgba(212,175,55,.07)" stroke-width="1" stroke-dasharray="60 40">
+  <line x1="0" y1="824" x2="1440" y2="824"/>
+ </g>
+
+ <!-- ================= THÉMIS (Déesse de la Justice) ================= -->
+ <g opacity=".6">
+  <!-- ombre au sol -->
+  <ellipse cx="372" cy="812" rx="140" ry="14" fill="rgba(0,0,0,.55)"/>
+  <!-- Glaive (main gauche, pointe vers le bas) -->
+  <g fill="url(#goldG)">
+   <rect x="260" y="318" width="9" height="26" rx="4"/>
+   <circle cx="264.5" cy="313" r="7"/>
+   <rect x="236" y="344" width="58" height="8" rx="4"/>
+   <path d="M258 354 L271 354 L271 782 L264.5 802 L258 782 Z"/>
+  </g>
+  <!-- Balance (main droite levée) -->
+  <g stroke="url(#goldG)" fill="none" stroke-width="4" stroke-linecap="round">
+   <line x1="500" y1="122" x2="500" y2="108"/>
+   <line x1="428" y1="122" x2="572" y2="122"/>
+   <line x1="428" y1="122" x2="428" y2="178"/>
+   <line x1="572" y1="122" x2="572" y2="178"/>
+  </g>
+  <circle cx="500" cy="122" r="7" fill="url(#goldG)"/>
+  <path d="M400 180 Q428 220 456 180 Z" fill="url(#goldG)" opacity=".9"/>
+  <path d="M544 180 Q572 220 600 180 Z" fill="url(#goldG)" opacity=".9"/>
+  <!-- bras droit vers la balance -->
+  <path d="M402 210 Q470 175 498 128" stroke="url(#goldG)" stroke-width="15" fill="none" stroke-linecap="round"/>
+  <!-- bras gauche vers le glaive -->
+  <path d="M336 210 Q300 262 266 320" stroke="url(#goldG)" stroke-width="15" fill="none" stroke-linecap="round"/>
+  <!-- tête + bandeau -->
+  <circle cx="368" cy="152" r="27" fill="url(#goldG)"/>
+  <path d="M340 146 Q340 112 368 112 Q396 112 396 146 Q392 130 368 128 Q344 130 340 146Z" fill="#b08d2a"/>
+  <rect x="340" y="144" width="56" height="13" rx="6" fill="#2a2410"/>
+  <!-- robe -->
+  <path d="M334 192 Q330 260 318 400 L298 800 Q370 816 444 800 L420 400 Q410 260 404 192 Q370 206 334 192 Z" fill="url(#goldG)" opacity=".92"/>
+  <!-- plis de la robe -->
+  <g stroke="rgba(40,30,5,.35)" stroke-width="2.5" fill="none">
+   <path d="M348 300 Q344 520 336 790"/><path d="M370 300 Q370 520 370 794"/>
+   <path d="M392 300 Q396 520 404 790"/>
+  </g>
+  <!-- ceinture -->
+  <rect x="322" y="296" width="96" height="14" rx="7" fill="#7a5f18"/>
+ </g>
+
+ <!-- ================= VOITURE SPORTIVE MODERNE ================= -->
+ <g>
+  <ellipse cx="1020" cy="800" rx="350" ry="16" fill="rgba(0,0,0,.55)"/>
+  <!-- carrosserie -->
+  <path d="M700 776 C702 758 712 748 732 742 C772 728 800 720 838 708 C868 698 898 666 936 650 C974 634 1030 628 1086 630 C1140 632 1186 646 1222 662 C1252 674 1290 678 1316 680 C1331 684 1339 698 1339 722 L1339 762 C1339 772 1332 778 1322 778 L1262 778 C1256 740 1227 714 1190 714 C1153 714 1124 740 1118 778 L940 778 C934 740 905 714 868 714 C831 714 802 740 796 778 L716 778 C705 778 699 784 700 776 Z"
+        fill="url(#carBody)" stroke="rgba(148,163,184,.35)" stroke-width="1.5"/>
+  <!-- vitres -->
+  <path d="M944 658 C978 644 1032 638 1082 640 C1122 642 1152 650 1178 660 L1146 665 C1092 671 990 671 958 667 Z"
+        fill="#0e2233" stroke="rgba(125,211,252,.3)" stroke-width="1"/>
+  <line x1="1058" y1="641" x2="1062" y2="668" stroke="rgba(125,211,252,.25)" stroke-width="3"/>
+  <!-- ligne de caisse -->
+  <path d="M742 738 C820 722 980 698 1130 700" stroke="rgba(125,211,252,.18)" stroke-width="2.5" fill="none"/>
+  <!-- phare avant (cyan) -->
+  <path d="M706 757 L744 745 L746 754 L710 766 Z" fill="#7dd3fc" filter="url(#glowCyan)"/>
+  <!-- feu arrière (rouge) -->
+  <rect x="1322" y="688" width="14" height="7" rx="3" fill="#ef4444" filter="url(#glowRed)"/>
+  <!-- aileron -->
+  <path d="M1296 672 L1326 668 L1326 676 L1300 680 Z" fill="#0a0f1a" stroke="rgba(148,163,184,.3)"/>
+  <!-- roues -->
+  <g>
+   <circle cx="868" cy="758" r="52" fill="#0a0e17" stroke="#22304a" stroke-width="5"/>
+   <circle cx="868" cy="758" r="30" fill="none" stroke="url(#chromeG)" stroke-width="4"/>
+   <circle cx="868" cy="758" r="6" fill="#d4af37"/>
+   <g stroke="url(#chromeG)" stroke-width="3">
+    <line x1="868" y1="734" x2="868" y2="746"/><line x1="868" y1="770" x2="868" y2="782"/>
+    <line x1="844" y1="758" x2="856" y2="758"/><line x1="880" y1="758" x2="892" y2="758"/>
+    <line x1="851" y1="741" x2="860" y2="749"/><line x1="876" y1="767" x2="885" y2="775"/>
+    <line x1="885" y1="741" x2="876" y2="749"/><line x1="860" y1="767" x2="851" y2="775"/>
+   </g>
+   <circle cx="868" cy="758" r="40" fill="none" stroke="rgba(127,29,29,.6)" stroke-width="3" stroke-dasharray="10 14"/>
+  </g>
+  <g>
+   <circle cx="1190" cy="758" r="52" fill="#0a0e17" stroke="#22304a" stroke-width="5"/>
+   <circle cx="1190" cy="758" r="30" fill="none" stroke="url(#chromeG)" stroke-width="4"/>
+   <circle cx="1190" cy="758" r="6" fill="#d4af37"/>
+   <g stroke="url(#chromeG)" stroke-width="3">
+    <line x1="1190" y1="734" x2="1190" y2="746"/><line x1="1190" y1="770" x2="1190" y2="782"/>
+    <line x
