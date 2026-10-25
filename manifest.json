@@ -1,0 +1,16 @@
+{
+  "name": "Expert Auto Litige",
+  "short_name": "Expert Auto",
+  "description": "Analyse technique et juridique de litiges automobiles",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#d4af37",
+  "icons": [
+    {
+      "src": "https://image.pollinations.ai/prompt/Icon%20of%20a%20golden%20car%20and%20scale%20of%20justice%20on%20dark%20background?width=512&height=512&nologo=true",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
