@@ -1,0 +1,45 @@
+:root {
+    --primary: #d4af37; /* Or */
+    --dark: #1a1a1a;
+    --text: #f0f0f0;
+}
+body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0; padding: 0;
+    background-color: var(--dark);
+    color: var(--text);
+    /* Génération dynamique de l'image de fond par Pollinations AI */
+    background-image: url('https://image.pollinations.ai/prompt/A%20highly%20realistic%20modern%20sport%20car%20merged%20with%20the%20goddess%20of%20justice%20Themis%20holding%20scales%20and%20sword%2C%20cinematic%20lighting%2C%20photorealistic%2C%208k?width=1080&height=1920&nologo=true');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+/* Overlay sombre pour la lisibilité */
+body::before {
+    content: "";
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85); 
+    z-index: -1;
+}
+.screen { padding: 20px; min-height: 100vh; box-sizing: border-box; max-width: 800px; margin: 0 auto; }
+.hidden { display: none !important; }
+.login-box {
+    margin: 100px auto; background: rgba(20,20,20,0.95);
+    padding: 40px; border-radius: 15px; border: 2px solid var(--primary); text-align: center;
+}
+input, select, textarea {
+    width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box;
+    background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px;
+}
+button {
+    background: var(--primary); color: black; border: none; padding: 15px 30px;
+    font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 15px;
+}
+.btn-secondary { background: #444; color: white; padding: 8px 15px; width: auto; font-size: 14px; margin: 0; }
+.btn-group { display: flex; gap: 10px; }
+.btn-group button { width: 50%; }
+#reportContainer {
+    background: rgba(255, 255, 255, 0.98); color: black; padding: 25px; margin-top: 20px;
+    border-radius: 10px; border: 2px solid var(--primary); white-space: pre-wrap; font-family: monospace; font-size: 14px;
+}
+#loading { text-align: center; font-size: 18px; color: var(--primary); margin: 40px 0; }
