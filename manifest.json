@@ -1,16 +1,19 @@
 {
-  "name": "Expert Auto Litige",
+  "id": "./",
+  "name": "Expert Auto Litige - Analyse technique et juridique",
   "short_name": "Expert Auto",
   "description": "Analyse technique et juridique de litiges automobiles",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#1a1a1a",
   "theme_color": "#d4af37",
+  "lang": "fr-FR",
+  "categories": ["utilities", "productivity"],
   "icons": [
-    {
-      "src": "https://image.pollinations.ai/prompt/Icon%20of%20a%20golden%20car%20and%20scale%20of%20justice%20on%20dark%20background?width=512&height=512&nologo=true",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }
