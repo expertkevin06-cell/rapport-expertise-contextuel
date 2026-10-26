@@ -12,8 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://js.puter.com/v2/"></script>
   <style>
-    #quotaBadge{display:inline-block;margin-top:6px;padding:6px 12px;font-size:12.5px;font-weight:700;
-      color:#6b5510;background:rgba(255,255,255,.9);border:1px solid var(--gold);border-radius:999px}
+    #quotaBadge{display:inline-block;margin-top:6px;padding:6px 12px;font-size:12.5px;font-weight:700;color:#6b5510;background:rgba(255,255,255,.9);border:1px solid var(--gold);border-radius:999px}
     #reportSource{font-size:12px;color:#4a5065;margin:0 0 8px;font-style:italic}
   </style>
 </head>
@@ -35,7 +34,7 @@
       <div>
         <h2>⚖️ Analyse de Litige Automobile</h2>
         <p class="subtitle">Expertise ingénieur + analyse juridique (vices cachés, conformité, jurisprudence)</p>
-        <span id="quotaBadge">🧠 Analyses IA aujourd\u2019hui : 0</span>
+        <span id="quotaBadge">🧠 Analyses IA aujourd'hui : 0</span>
       </div>
       <button class="btn-secondary" onclick="logout()">Déconnexion</button>
     </header>
@@ -59,10 +58,10 @@
       <input type="number" id="kmPanne" inputmode="numeric" placeholder="ex : 92000" required>
       <label for="descPanne">Description détaillée des pannes et symptômes</label>
       <textarea id="descPanne" placeholder="Ex : bruit métallique, perte de puissance, voyant moteur, fuite…" required></textarea>
-      <button type="button" onclick="generateReport()">🧠 Générer le rapport d'expertise (IA)</button>
+      <button type="button" onclick="generateReport()">🧠 Générer le rapport d'expertise (Multi-IA)</button>
     </form>
 
-    <div id="loading" class="hidden">⚖️ Analyse technique et juridique en cours…<br><small>IA gratuite sans clé (Puter → Pollinations → moteur local)</small></div>
+    <div id="loading" class="hidden">⚖️ Analyse en cours…<br><small>Multi-IA gratuite (15 providers sans clé)</small></div>
 
     <div id="reportContainer" class="hidden">
       <h3>📄 Rapport d'expertise</h3>
@@ -80,6 +79,8 @@
     </section>
   </div>
 
+  <script src="./data.js"></script>
+  <script src="./ai-providers.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
